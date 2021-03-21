@@ -102,6 +102,11 @@ Running migrations:
 
 - admin.py に登録
 
+## Django のモデルにデータインポート
+
+- data_import.py
+ ローカルのスクリプトから Django の環境を呼んでモデルの操作する
+
 
 
 以上
