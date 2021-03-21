@@ -45,5 +45,37 @@ http://127.0.0.1:8000/
 http://127.0.0.1:8000/admin/  
 
 
+## アプリケーション作成
+
+- memo という名
+```
+python manage.py startapp memo
+```
+- テストのビュー作成  memo/views.py
+```
+from django.http import HttpResponse
+
+
+def index(request):
+    return HttpResponse("Hello, world.")
+
+```
+- qa/urls.py urlが少ないのが見込まれるのでファイルを分けない
+```
+from django.contrib import admin
+from django.urls import path
+from memo import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('admin/', admin.site.urls),
+]
+```
+- 開発用サーバー起動確認
+
+
+
+
+
 
 以上
