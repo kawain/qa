@@ -73,8 +73,34 @@ urlpatterns = [
 ```
 - 開発用サーバー起動確認
 
+## モデル作成
 
+- settings.py の INSTALLED_APPS にアプリを追加しから
 
+```
+python manage.py makemigrations <app name>
+
+python manage.py migrate
+```
+- 実行例
+```
+
+$ python manage.py makemigrations memo
+Migrations for 'memo':
+  memo\migrations\0001_initial.py
+    - Create model Category
+    - Create model Tag
+    - Create model Question
+    - Create model Note
+
+$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, memo, sessions
+Running migrations:
+  Applying memo.0001_initial... OK
+```
+
+- admin.py に登録
 
 
 
