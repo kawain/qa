@@ -19,5 +19,7 @@ from memo import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('memo/', views.memo, name='memo'),
+    path('qa/', views.qa, name='qa'),
     path('admin/', admin.site.urls),
 ]

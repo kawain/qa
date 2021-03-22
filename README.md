@@ -108,5 +108,19 @@ Running migrations:
  ローカルのスクリプトから Django の環境を呼んでモデルの操作する
 
 
+## テンプレートの置き場所は manage.py と同じ階層
+
+Django チュートリアルと違います
+
+```
+TEMPLATES = [
+    {
+        'DIRS': [BASE_DIR, 'templates'],
+
+```
+
+
+
+
 
 以上
