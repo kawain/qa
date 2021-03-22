@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ data.title }}</h1>
+
+<ul>
+    <li>カテゴリ：{{ data.cat.name }}</li>
+    <li>タグ：
+        {% for t in data.tags.all %}
+        {{ t.name }}
+        {% endfor %}
+    </li>
+</ul>
+
+<pre>{{ data.content }}</pre>
+
+<p>
+    <a href="../">メモに戻る</a>
+</p>
+{% endblock %}

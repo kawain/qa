@@ -1,20 +1,28 @@
-<!DOCTYPE html>
-<html lang="js">
+{% extends 'base.html' %}
+{% block content %}
+<h1>memo</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>memo</title>
-</head>
+<table class="table">
+    <tr>
+        <th>カテゴリ</th>
+        <th>タイトル</th>
+        <th>タグ</th>
+    </tr>
+    {% for data in dataset %}
+    <tr>
+        <td>{{ data.cat.name }}</td>
+        <td><a href="{% url 'memo_detail' data.id %}">{{ data.title }}</a></td>
+        <td>
+            {% for t in data.tags.all %}
+            {{ t.name }}
+            {% endfor %}
+        </td>
+        <td></td>
+    </tr>
+    {% endfor %}
+</table>
 
-<body>
-    <h1>memo</h1>
-
-    <p>
-        <a href="../">トップに戻る</a>
-    </p>
-
-</body>
-
-</html>
+<p>
+    <a href="../">トップに戻る</a>
+</p>
+{% endblock %}

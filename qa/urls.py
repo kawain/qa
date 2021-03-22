@@ -20,6 +20,8 @@ from memo import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('memo/', views.memo, name='memo'),
+    path('memo/detail/<int:id>/', views.memo_detail, name='memo_detail'),
+    path('memo/create/', views.memo_create, name='memo_create'),
     path('qa/', views.qa, name='qa'),
     path('admin/', admin.site.urls),
 ]

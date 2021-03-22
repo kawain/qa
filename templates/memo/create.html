@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>メモ新規入力</h1>
+<form action="." method="POST">
+    {% csrf_token %}
+    <table class="table">
+        {{ form.as_table }}
+    </table>
+    <button>送信</button>
+</form>
+<p>
+    <a href="../">メモに戻る</a>
+</p>
+{% endblock %}

@@ -119,7 +119,11 @@ TEMPLATES = [
 
 ```
 
+## モデルform
 
+## テンプレート
+
+## 関数ベースビューでの list と detail
 
 
 

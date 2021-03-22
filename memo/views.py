@@ -3,6 +3,9 @@ from django.shortcuts import render
 # from django.http import HttpResponse
 # return HttpResponse("")
 
+from .models import Category, Tag, Question, Note
+from .forms import NoteForm
+
 
 def index(request):
     context = {}
@@ -11,7 +14,25 @@ def index(request):
 
 def memo(request):
     context = {}
+    context["dataset"] = Note.objects.all()
     return render(request, "memo/index.html", context)
+
+
+def memo_detail(request, id):
+    context = {}
+    context["data"] = Note.objects.get(id=id)
+    return render(request, "memo/detail.html", context)
+
+
+def memo_create(request):
+    form = NoteForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        form = NoteForm()
+    context = {
+        'form': form
+    }
+    return render(request, "memo/create.html", context)
 
 
 def qa(request):
