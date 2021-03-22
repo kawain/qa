@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ data.title }}</h1>
+<h1 class="my-4">{{ data.title }}</h1>
 
+<p>
+    <a href="/admin/memo/note/{{data.id}}/change/">編集する</a>
+</p>
 <ul>
     <li>カテゴリ：{{ data.cat.name }}</li>
     <li>タグ：

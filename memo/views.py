@@ -14,7 +14,7 @@ def index(request):
 
 def memo(request):
     context = {}
-    context["dataset"] = Note.objects.all()
+    context["dataset"] = Note.objects.all().order_by('-id')
     return render(request, "memo/index.html", context)
 
 
@@ -25,6 +25,7 @@ def memo_detail(request, id):
 
 
 def memo_create(request):
+    """使わないけれども置いておく"""
     form = NoteForm(request.POST or None)
     if form.is_valid():
         form.save()
