@@ -2,9 +2,10 @@
 {% block content %}
 <h1 class="my-4">{{ data.title }}</h1>
 
-<p>
+<p class="my-4">
     <a href="/admin/memo/note/{{data.id}}/change/">編集する</a>
 </p>
+
 <ul>
     <li>カテゴリ：{{ data.cat.name }}</li>
     <li>タグ：
@@ -14,9 +15,9 @@
     </li>
 </ul>
 
-<pre>{{ data.content }}</pre>
+<pre><code>{{ data.content }}</code></pre>
 
-<p>
-    <a href="../">メモに戻る</a>
+<p class="my-4">
+    <a href="{% url 'memo' %}">メモに戻る</a>
 </p>
 {% endblock %}

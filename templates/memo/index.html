@@ -2,7 +2,7 @@
 {% block content %}
 <h1 class="my-4">memo</h1>
 
-<p>
+<p class="my-4">
     <a href="/admin/memo/note/add/">新規追加する</a>
 </p>
 
@@ -26,7 +26,7 @@
     {% endfor %}
 </table>
 
-<p>
-    <a href="../">トップに戻る</a>
+<p class="my-4">
+    <a href="{% url 'index' %}">トップに戻る</a>
 </p>
 {% endblock %}

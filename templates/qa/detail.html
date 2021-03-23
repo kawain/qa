@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="my-4">{{ data.id }} の問題</h1>
+
+<p class="my-4">
+    <a href="/admin/memo/question/{{data.id}}/change/">編集する</a>
+</p>
+
+<ul>
+    <li>カテゴリ：{{ data.cat.name }}</li>
+    <li>タグ：
+        {% for t in data.tags.all %}
+        {{ t.name }}
+        {% endfor %}
+    </li>
+</ul>
+
+<h3>問題</h3>
+<pre><code>{{ data.problem }}</code></pre>
+
+<h3>解答</h3>
+<pre><code style="color: white;">{{ data.answer }}</code></pre>
+
+<p class="my-4">
+    <a href="{% url 'qa' %}">qaに戻る</a>
+</p>
+{% endblock %}

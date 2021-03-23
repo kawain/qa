@@ -26,7 +26,8 @@ class Question(models.Model):
     problem = models.TextField(verbose_name="質問", blank=True, null=True)
 
     def __str__(self):
-        return self.answer
+        text = f"<{self.cat}> {self.problem[:50]}"
+        return text
 
 
 class Note(models.Model):

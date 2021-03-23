@@ -23,5 +23,7 @@ urlpatterns = [
     path('memo/detail/<int:id>/', views.memo_detail, name='memo_detail'),
     path('memo/create/', views.memo_create, name='memo_create'),
     path('qa/', views.qa, name='qa'),
+    path('qa/search/', views.qa_search, name='qa_search'),
+    path('qa/detail/<int:id>/', views.qa_detail, name='qa_detail'),
     path('admin/', admin.site.urls),
 ]
