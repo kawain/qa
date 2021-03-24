@@ -2,11 +2,11 @@
 {% block content %}
 <h1 class="my-4">QA</h1>
 
-<h2>カテゴリ選択</h2>
+<h2 class="my-4">カテゴリ選択</h2>
 
-<form action="" method="post" class="my-4">
+<form action="{% url 'qa_start' %}" method="get" class="my-4" id="qaform">
     {% for v in cate_agg %}
-    <label class="me-4"><input type="checkbox" name="{{ v.cat }}" id=""> {{ v.cat__name }} <span class="badge rounded-pill bg-primary">{{ v.total }}</span></label>
+    <label class="me-4"><input type="checkbox" name="c" value="{{ v.cat }}"> {{ v.cat__name }} <span class="badge rounded-pill bg-primary">{{ v.total }}</span></label>
     {% endfor %}
 
     <div class="my-4">
@@ -15,8 +15,12 @@
     </div>
 </form>
 
-<h2>内容検索</h2>
+<h2 class="my-4">問題</h2>
+<div id="display1"></div>
+<div id="display2"></div>
+<button class="btn btn-primary" id="qbtn">出題</button>
 
+<h2 class="my-4">内容検索</h2>
 <form action="{% url 'qa_search' %}" method="get" class="my-4">
     <div class="row g-3 align-items-center">
         <div class="col-auto">
