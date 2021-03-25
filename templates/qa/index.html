@@ -15,10 +15,12 @@
     </div>
 </form>
 
-<h2 class="my-4">問題</h2>
-<div id="display1"></div>
-<div id="display2"></div>
-<button class="btn btn-primary" id="qbtn">出題</button>
+<div id="mondai" style="display: none;">
+    <h2 class="my-4">問題</h2>
+    <div id="display1"></div>
+    <div id="display2"></div>
+    <button class="btn btn-primary" id="qbtn">出題</button>
+</div>
 
 <h2 class="my-4">内容検索</h2>
 <form action="{% url 'qa_search' %}" method="get" class="my-4">

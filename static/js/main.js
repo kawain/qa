@@ -2,6 +2,7 @@ const qaform = document.getElementById("qaform")
 const display1 = document.getElementById("display1")
 const display2 = document.getElementById("display2")
 const qbtn = document.getElementById("qbtn")
+const mondai = document.getElementById("mondai")
 
 
 function shuffle(array) {
@@ -34,27 +35,29 @@ function questionQuestions(arr, data) {
 
 function changeQuestion(func) {
     let obj = func()
-    let html1 = `<pre><code>${obj.fields.problem}</code></pre>`
-    let html2 = `<p>解答：<b style="color:#fff;">${obj.fields.answer}</b></p>`
+    console.log(obj)
+    let html1 = `<p>${obj.cat__name}の問題</p><pre><code>${obj.problem}</code></pre>`
+    let html2 = `<p>解答：<b style="color:#fff;">${obj.answer}</b></p>`
     display1.innerHTML = html1
     display2.innerHTML = html2
 }
 
 function shuffleData(data) {
-    const obj = JSON.parse(data.qa_json);
-    let count = obj.length
+    let count = data.length
     let arr = makeList(count)
     shuffle(arr)
-    let qq = questionQuestions(arr, obj)
+    let qq = questionQuestions(arr, data)
     qbtn.addEventListener("click", () => {
         changeQuestion(qq)
     })
 }
 
-if (qaform && display1 && display2 && qbtn) {
+if (qaform) {
     const c = document.getElementsByName("c")
     qaform.addEventListener("submit", (e) => {
         e.preventDefault()
+
+        mondai.style.display = "block"
 
         display1.innerHTML = ""
         display2.innerHTML = ""

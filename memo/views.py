@@ -1,19 +1,18 @@
 from django.shortcuts import render
-
 # from django.http import HttpResponse
 # return HttpResponse("")
 from django.db.models import Value
 from django.db.models.functions import Concat
 from django.db.models import Count, TextField
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core import serializers
 from django.http import JsonResponse
-from .models import Category, Tag, Question, Note
+from .models import Question, Note
 from .forms import NoteForm
 
 # デバッグ用
 import logging
 logging.basicConfig(level=logging.DEBUG)
+# logging.debug(a)
 
 
 def index(request):
@@ -63,18 +62,15 @@ def qa_start(request):
         logging.debug(clst)
         # 文字を数値に変える
         clst = [int(i) for i in clst]
-        # logging.debug(clst)
         # IN句
         qs = Question.objects.filter(cat_id__in=clst)
-        # logging.debug(a)
     else:
         qs = Question.objects.all()
-        # logging.debug("空です")
 
-    ret = {"qa_json": serializers.serialize('json', qs)}
-    # ret = serializers.serialize('json', qs)
+    # https://stackoverflow.com/questions/15874233/output-django-queryset-as-json
+    data = list(qs.values('cat__name', 'answer', 'problem'))
 
-    return JsonResponse(ret)
+    return JsonResponse(data, safe=False)
 
 
 def qa_search(request):
