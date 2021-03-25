@@ -23,23 +23,27 @@ function makeList(n) {
 function questionQuestions(arr, data) {
     let i = 0
     function func() {
-        if (i == arr.length) {
-            return
+        if (i >= arr.length) {
+            return false
         }
         let index = arr[i]
         i++
-        return data[index]
+        return [data[index], i]
     }
     return func;
 }
 
 function changeQuestion(func) {
     let obj = func()
-    console.log(obj)
-    let html1 = `<p>${obj.cat__name}の問題</p><pre><code>${obj.problem}</code></pre>`
-    let html2 = `<p>解答：<b style="color:#fff;">${obj.answer}</b></p>`
-    display1.innerHTML = html1
-    display2.innerHTML = html2
+    if (!obj) {
+        display1.innerHTML = "問題は終了しました<br><br><br>"
+        display2.innerHTML = ""
+    } else {
+        let html1 = `<p>No ${obj[1]}. ${obj[0].cat__name}の問題</p><pre><code>${obj[0].problem}</code></pre>`
+        let html2 = `<p>解答：<b style="color:#fff;">${obj[0].answer}</b></p>`
+        display1.innerHTML = html1
+        display2.innerHTML = html2
+    }
 }
 
 function shuffleData(data) {

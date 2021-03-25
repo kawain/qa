@@ -2,9 +2,13 @@
 {% block content %}
 <h1 class="my-4">{{ data.id }} の問題</h1>
 
-<p class="my-4">
-    <a href="/admin/memo/question/{{data.id}}/change/">編集する</a>
-</p>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'qa' %}">qa</a></li>
+        <li class="breadcrumb-item"><a href="/admin/memo/question/{{data.id}}/change/" target="_blank">change</a></li>
+    </ol>
+</nav>
 
 <ul>
     <li>カテゴリ：{{ data.cat.name }}</li>
@@ -21,7 +25,7 @@
 <h3>解答</h3>
 <pre><code style="color: white;">{{ data.answer }}</code></pre>
 
-<p class="my-4">
-    <a href="{% url 'qa' %}">qaに戻る</a>
-</p>
+<div class="text-center my-4">
+    <button class="btn btn-primary" onclick="window.scrollTo(0, 0);">ページトップ</button>
+</div>
 {% endblock %}

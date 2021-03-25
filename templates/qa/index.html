@@ -2,6 +2,13 @@
 {% block content %}
 <h1 class="my-4">QA</h1>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">home</a></li>
+        <li class="breadcrumb-item"><a href="/admin/memo/question/add/" target="_blank">add</a></li>
+    </ol>
+</nav>
+
 <h2 class="my-4">カテゴリ選択</h2>
 
 <form action="{% url 'qa_start' %}" method="get" class="my-4" id="qaform">
@@ -37,8 +44,4 @@
         </div>
     </div>
 </form>
-
-<p class="my-4">
-    <a href="{% url 'index' %}">トップに戻る</a>
-</p>
 {% endblock %}

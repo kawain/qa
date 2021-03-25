@@ -16,18 +16,24 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def index(request):
-    context = {}
+    context = {
+        "title": "トップページ"
+    }
     return render(request, "index.html", context)
 
 
 def memo(request):
-    context = {}
+    context = {
+        "title": "memo トップページ"
+    }
     context["dataset"] = Note.objects.all().order_by('-id')
     return render(request, "memo/index.html", context)
 
 
 def memo_detail(request, id):
-    context = {}
+    context = {
+        "title": "memo 詳細ページ"
+    }
     context["data"] = Note.objects.get(id=id)
     return render(request, "memo/detail.html", context)
 
@@ -45,7 +51,9 @@ def memo_create(request):
 
 
 def qa(request):
-    context = {}
+    context = {
+        "title": "質問ページ"
+    }
     # カテゴリごとの投稿数の集計
     context["cate_agg"] = Question.objects.all().\
         values('cat', 'cat__name').\
@@ -90,7 +98,7 @@ def qa_search(request):
         )
     )
     # 繋げたカラムを一つとして検索したものをPaginatorにする
-    paginator = Paginator(queryset.filter(hoge__icontains=q), 100)
+    paginator = Paginator(queryset.filter(hoge__icontains=q).order_by('-id'), 100)
 
     try:
         dataset = paginator.page(page)
@@ -99,13 +107,17 @@ def qa_search(request):
     except EmptyPage:
         dataset = paginator.page(paginator.num_pages)
 
-    context = {}
+    context = {
+        "title": "質問リスト"
+    }
     context["dataset"] = dataset
 
     return render(request, "qa/list.html", context)
 
 
 def qa_detail(request, id):
-    context = {}
+    context = {
+        "title": "質問詳細"
+    }
     context["data"] = Question.objects.get(id=id)
     return render(request, "qa/detail.html", context)
