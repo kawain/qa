@@ -1,10 +1,12 @@
 import os
-import django
 import sqlite3
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qa.settings")
+
+import django  # noqa
 django.setup()
+
 # ↓ django.setup()の後にする
-from memo.models import Question, Category
+from memo.models import Question, Category  # noqa
 
 
 # 既存の sqlite データベース　manage.py と同階層に置く

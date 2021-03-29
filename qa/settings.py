@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'memo.apps.MemoConfig',
+    'study1.apps.Study1Config',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
