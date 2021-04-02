@@ -3,3 +3,4 @@
 *.db
 *.bat
 config.ini
+*.vscode
