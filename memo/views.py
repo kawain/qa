@@ -23,10 +23,22 @@ def index(request):
 
 
 def memo(request):
+    # Paginator 用
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(Note.objects.all().order_by('-id'), 20)
+
+    try:
+        dataset = paginator.page(page)
+    except PageNotAnInteger:
+        dataset = paginator.page(1)
+    except EmptyPage:
+        dataset = paginator.page(paginator.num_pages)
+
     context = {
         "title": "memo トップページ"
     }
-    context["dataset"] = Note.objects.all().order_by('-id')
+    context["dataset"] = dataset
     return render(request, "memo/index.html", context)
 
 
@@ -98,7 +110,8 @@ def qa_search(request):
         )
     )
     # 繋げたカラムを一つとして検索したものをPaginatorにする
-    paginator = Paginator(queryset.filter(hoge__icontains=q).order_by('-id'), 100)
+    paginator = Paginator(queryset.filter(
+        hoge__icontains=q).order_by('-id'), 100)
 
     try:
         dataset = paginator.page(page)
