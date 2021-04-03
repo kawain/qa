@@ -1,7 +1,7 @@
 from django.shortcuts import render
 # from django.http import HttpResponse
 # return HttpResponse("")
-from django.db.models import Value
+from django.db.models import Q, Value
 from django.db.models.functions import Concat
 from django.db.models import Count, TextField
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -16,8 +16,78 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def index(request):
+    # キーワード
+    q = request.GET.get("q", "")
+    # キーワードリスト
+    qlist = []
+    # キーワードがあれば
+    if q != "":
+        # 先頭と末尾の空白削除して、全角空白を半角にしてからリストに
+        qlist = q.strip().replace("　", " ").split()
+
+    queryset_q = []
+    queryset_n = []
+
+    # キーワードリストがあれば
+    if len(qlist) > 0:
+        # Question
+        queryset_q = Question.objects.all()
+        # Note
+        queryset_n = Note.objects.all()
+
+        # Q オブジェクトを
+        q_object = Q()
+        # キーワード分
+        for v in qlist:
+            # and でつなげる
+            q_object.add(Q(search__icontains=v), Q.AND)
+
+        # add したものはキーワードにより例えばこうなっている
+        # (AND: ('search__icontains', 'import'), ('search__icontains', 'select'), ('search__icontains', 'app'), ('search__icontains', 'numpy'))
+
+        # annotate Concat を使用して、カラムをつなげ
+        # 最後の filter に上で作成した q_object を挿入
+
+        # Question 用
+        queryset_q = queryset_q.\
+            annotate(
+                search=Concat(
+                    'cat',
+                    Value(' '),
+                    'tags__name',
+                    Value(' '),
+                    'answer',
+                    Value(' '),
+                    'problem',
+                    output_field=TextField(),
+                )
+            ).filter(q_object)
+
+        # Note 用
+        queryset_n = queryset_n.\
+            annotate(
+                search=Concat(
+                    'cat',
+                    Value(' '),
+                    'tags__name',
+                    Value(' '),
+                    'title',
+                    Value(' '),
+                    'content',
+                    output_field=TextField(),
+                )
+            ).filter(q_object)
+
+    # タグの重複削除方法がわからず set で対応
+    # set オブジェクトに型変換
+    queryset_q = set(queryset_q)
+    queryset_n = set(queryset_n)
+
     context = {
-        "title": "トップページ"
+        "title": "トップページ",
+        "q": " ".join(qlist),
+        "queryset_q": queryset_q,
+        "queryset_n": queryset_n,
     }
     return render(request, "index.html", context)
 

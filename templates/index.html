@@ -4,6 +4,7 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">home</a></li>
         <li class="breadcrumb-item"><a href="/admin/" target="_blank">管理画面</a></li>
     </ol>
 </nav>
@@ -12,5 +13,76 @@
     <a class="list-group-item list-group-item-action" href="/memo">メモ</a>
     <a class="list-group-item list-group-item-action" href="/qa">問題</a>
 </ul>
+
+<h2 class="my-4">検索</h2>
+
+<form action="" method="get">
+    <div class="row g-3 align-items-center">
+        <div class="col-auto">
+            <input type="text" class="form-control" name="q" value="{{q}}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">検索</button>
+        </div>
+    </div>
+</form>
+
+{% if queryset_q %}
+<h3 class="my-4">Question</h3>
+<table class="table my-4">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">カテゴリ</th>
+            <th scope="col">タグ</th>
+            <th scope="col">内容</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for v in queryset_q %}
+        <tr>
+            <td><a href="{% url 'qa_detail' v.id %}">{{ v.id }}</a></td>
+            <td>{{ v.cat.name }}</td>
+            <td>{% for tag in v.tags.all %}
+                {{ tag }}
+                {% endfor %}
+            </td>
+            <td>{{ v.problem|truncatechars:50 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% if queryset_n %}
+<h3 class="my-4">Note</h3>
+<table class="table my-4">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">カテゴリ</th>
+            <th scope="col">タグ</th>
+            <th scope="col">タイトル</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for v in queryset_n %}
+        <tr>
+            <td><a href="{% url 'memo_detail' v.id %}">{{ v.id }}</a></td>
+            <td>{{ v.cat.name }}</td>
+            <td>{% for tag in v.tags.all %}
+                {{ tag }}
+                {% endfor %}
+            </td>
+            <td>{{ v.title }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<div class="text-center my-4">
+    <button class="btn btn-primary" onclick="window.scrollTo(0, 0);">ページトップ</button>
+</div>
 
 {% endblock %}

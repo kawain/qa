@@ -1,7 +1,13 @@
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qa.settings")
 import django  # noqa
+
+from django.db.models import Q, Value
+from django.db.models import Count, TextField
+from django.db.models.functions import Concat
+
 django.setup()
+
 
 # ※注意　モデルのインポートは ↓ django.setup()の後にする
 # この自作モデルの詳細は memo/models.py を参照
@@ -311,5 +317,73 @@ def test14():
         print(v.note_set.all())
 
 
+def test15():
+    # 複数テーブル横断検索
+
+    # キーワード
+    q = "　import  channel"
+    # キーワードリスト
+    qlist = []
+    # キーワードがあれば
+    if q != "":
+        # 先頭と末尾の空白削除して、全角空白を半角にしてからリストに
+        qlist = q.strip().replace("　", " ").split()
+
+    # Question
+    queryset_q = Question.objects.all()
+    # Note
+    queryset_n = Note.objects.all()
+    # キーワードリストがあれば
+    if len(qlist) > 0:
+        # Q オブジェクトを
+        q_object = Q()
+        # キーワード分
+        for v in qlist:
+            # and でつなげる
+            q_object.add(Q(search__icontains=v), Q.AND)
+
+        # add したものはキーワードにより例えばこうなっている
+        # (AND: ('search__icontains', 'import'), ('search__icontains', 'select'), ('search__icontains', 'app'), ('search__icontains', 'numpy'))
+
+        # annotate Concat を使用して、カラムをつなげ
+        # 最後の filter に上で作成した q_object を挿入
+
+        # Question 用
+        queryset_q = queryset_q.\
+            annotate(
+                search=Concat(
+                    'cat',
+                    Value(' '),
+                    'tags__name',
+                    Value(' '),
+                    'answer',
+                    Value(' '),
+                    'problem',
+                    output_field=TextField(),
+                )
+            ).filter(q_object)
+
+        # Note 用
+        queryset_n = queryset_n.\
+            annotate(
+                search=Concat(
+                    'cat',
+                    Value(' '),
+                    'tags__name',
+                    Value(' '),
+                    'title',
+                    Value(' '),
+                    'content',
+                    output_field=TextField(),
+                )
+            ).filter(q_object)
+
+    print(queryset_q)
+    print(queryset_n)
+
+
+
+
+
 if __name__ == "__main__":
-    test14()
+    test15()

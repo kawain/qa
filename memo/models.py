@@ -26,7 +26,7 @@ class Question(models.Model):
     problem = models.TextField(verbose_name="質問", blank=True, null=True)
 
     def __str__(self):
-        text = f"<{self.cat}> {self.problem[:50]}"
+        text = f"<{self.id}> <{self.cat}> {self.problem[:50]}"
         return text
 
 
@@ -41,4 +41,4 @@ class Note(models.Model):
     content = models.TextField(verbose_name="内容", blank=True, null=True)
 
     def __str__(self):
-        return self.title
+        return f"<{self.id}> {self.title}"
