@@ -33,7 +33,7 @@
 <ul class="pagination justify-content-center">
     {% if dataset.has_previous %}
     <li class="page-item">
-        <a class="page-link" href="?page={{ dataset.previous_page_number }}">&laquo;</a>
+        <a class="page-link" href="?page={{ dataset.previous_page_number }}{% if query_string %}&{{query_string}}{% endif %}">&laquo;</a>
     </li>
     {% else %}
     <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
@@ -43,13 +43,13 @@
     {% if dataset.number == i %}
     <li class="page-item active"><a class="page-link">{{ i }}</a></li>
     {% else %}
-    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ i }}{% if query_string %}&{{query_string}}{% endif %}">{{ i }}</a></li>
     {% endif %}
     {% endfor %}
 
     {% if dataset.has_next %}
     <li class="page-item">
-        <a class="page-link" href="?page={{ dataset.next_page_number }}">&raquo;</a>
+        <a class="page-link" href="?page={{ dataset.next_page_number }}{% if query_string %}&{{query_string}}{% endif %}">&raquo;</a>
     </li>
     {% else %}
     <li class="page-item disabled"><a class="page-link">&raquo;</a></li>

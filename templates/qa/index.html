@@ -30,7 +30,7 @@
 </div>
 
 <h2 class="my-4">内容検索</h2>
-<form action="{% url 'qa_search' %}" method="get" class="my-4">
+<form action="{% url 'qa_search' %}" method="get" class="my-4" target="_blank">
     <div class="row g-3 align-items-center">
         <div class="col-auto">
             <label for="q" class="col-form-label">キーワード</label>
@@ -41,6 +41,9 @@
         <div class="col-auto">
             <button type="submit" class="btn btn-primary">検索</button>
             <button type="reset" class="btn btn-secondary">reset</button>
+            <label>
+                <input type="checkbox" name="review" value="1"> 復習リスト
+            </label>
         </div>
     </div>
 </form>

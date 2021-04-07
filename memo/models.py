@@ -24,6 +24,7 @@ class Question(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, verbose_name="タグ")
     answer = models.CharField(max_length=255, verbose_name="答え")
     problem = models.TextField(verbose_name="質問", blank=True, null=True)
+    review = models.BooleanField(verbose_name="復習", default=False)
 
     def __str__(self):
         text = f"<{self.id}> <{self.cat}> {self.problem[:50]}"

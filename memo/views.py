@@ -1,3 +1,4 @@
+import urllib.parse
 from django.shortcuts import render
 # from django.http import HttpResponse
 # return HttpResponse("")
@@ -164,8 +165,20 @@ def qa_start(request):
 
 
 def qa_search(request):
+    # QUERY_STRING を取得し
+    qs = request.META['QUERY_STRING']
+    # リストにパースし
+    qs_l = urllib.parse.parse_qsl(qs)
+    # page を除いてリストを作り直し
+    nopage_l = [(v[0], v[1]) for v in qs_l if v[0] != "page"]
+    # QUERY_STRING を新たに作成
+    query_string = urllib.parse.urlencode(nopage_l)
+
+    # logging.debug(qs_l)
+
     # Paginator 用
     page = request.GET.get('page', 1)
+
     # キーワード
     q = request.GET.get("q", "")
     # カラムを繋げておく
@@ -180,8 +193,17 @@ def qa_search(request):
         )
     )
     # 繋げたカラムを一つとして検索したものをPaginatorにする
-    paginator = Paginator(queryset.filter(
-        hoge__icontains=q).order_by('-id'), 100)
+    review = request.GET.get('review', None)
+    if review is None:
+        paginator = Paginator(
+            queryset.filter(hoge__icontains=q).order_by('-id'), 100
+        )
+    else:
+        paginator = Paginator(
+            queryset.filter(
+                hoge__icontains=q, review=True
+            ).order_by('-id'), 100
+        )
 
     try:
         dataset = paginator.page(page)
@@ -191,9 +213,10 @@ def qa_search(request):
         dataset = paginator.page(paginator.num_pages)
 
     context = {
-        "title": "質問リスト"
+        "title": "質問リスト",
+        "dataset": dataset,
+        "query_string": query_string,
     }
-    context["dataset"] = dataset
 
     return render(request, "qa/list.html", context)
 
