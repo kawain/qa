@@ -14,8 +14,8 @@ from pathlib import Path
 import configparser
 
 
-config = configparser.ConfigParser()
-config.read("config.ini", encoding="utf-8")
+# config = configparser.ConfigParser()
+# config.read("config.ini", encoding="utf-8")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -84,8 +84,8 @@ WSGI_APPLICATION = 'qa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'NAME': config["db_path"]["db"],
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'NAME': config["db_path"]["db"],
     }
 }
 
