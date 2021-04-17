@@ -33,14 +33,22 @@ function questionQuestions(arr, data) {
     return func;
 }
 
+function strReplace(s) {
+    s = s.replace("<", "&lt;")
+    s = s.replace(">", "&gt;")
+    return s
+}
+
 function changeQuestion(func) {
     let obj = func()
     if (!obj) {
         display1.innerHTML = "問題は終了しました<br><br><br>"
         display2.innerHTML = ""
     } else {
-        let html1 = `<p>No ${obj[1]}. ${obj[0].cat__name}の問題</p><pre><code>${obj[0].problem}</code></pre>`
-        let html2 = `<p>解答：<b style="color:#fff;">${obj[0].answer}</b></p>`
+        let problem = strReplace(obj[0].problem)
+        let answer = strReplace(obj[0].answer)
+        let html1 = `<p>No ${obj[1]}. ${obj[0].cat__name}の問題</p><pre><code>${problem}</code></pre>`
+        let html2 = `<p>解答：<b style="color:#fff;">${answer}</b></p>`
         display1.innerHTML = html1
         display2.innerHTML = html2
     }
@@ -76,6 +84,7 @@ if (qaform) {
         fetch(`/qa/start/${params}`).then(response => {
             return response.json()
         }).then(jsonData => {
+            console.log(jsonData)
             shuffleData(jsonData)
         });
     })
