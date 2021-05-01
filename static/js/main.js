@@ -34,8 +34,11 @@ function questionQuestions(arr, data) {
 }
 
 function strReplace(s) {
-    s = s.replace("<", "&lt;")
-    s = s.replace(">", "&gt;")
+    // s = s.replace("<", "&lt;")
+    // s = s.replace(">", "&gt;")
+    // すべてreplace
+    s = s.replace(/</g, '&lt;')
+    s = s.replace(/>/g, '&gt;')
     return s
 }
 
