@@ -9,23 +9,26 @@
     </ol>
 </nav>
 
-<ul class="list-group">
-    <a class="list-group-item list-group-item-action" href="/memo">メモ</a>
-    <a class="list-group-item list-group-item-action" href="/qa">問題</a>
-</ul>
-
-<h2 class="my-4">検索</h2>
-
-<form action="" method="get">
-    <div class="row g-3 align-items-center">
-        <div class="col-auto">
-            <input type="text" class="form-control" name="q" value="{{q}}">
-        </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary">検索</button>
-        </div>
+<div class="row">
+    <div class="col">
+        <ul class="list-group">
+            <a class="list-group-item list-group-item-action" href="/memo">メモ</a>
+            <a class="list-group-item list-group-item-action" href="/qa">問題</a>
+        </ul>
     </div>
-</form>
+    <div class="col">
+        <form action="" method="get">
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <input type="text" class="form-control" name="q" value="{{q}}">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">検索</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% if queryset_q %}
 <h3 class="my-4">Question</h3>
@@ -81,8 +84,10 @@
 </table>
 {% endif %}
 
+{% if title != 'トップページ' %}
 <div class="text-center my-4">
     <button class="btn btn-primary" onclick="window.scrollTo(0, 0);">ページトップ</button>
 </div>
+{% endif %}
 
 {% endblock %}
