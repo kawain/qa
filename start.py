@@ -15,6 +15,6 @@ while True:
         webbrowser.open("http://127.0.0.1:8000/")
         break
     except Exception as e:
-        print(e)
+        _ = e
 
 print("スタート！！！")

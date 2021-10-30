@@ -28,7 +28,7 @@ TIME_ZONE = 'Asia/Tokyo'
 *__pycache__
 *.sqlite3
 ```
-- データベース作成(Djangoで用意している11個のテーブルができる)
+- データベース作成(Djangoで用意しているテーブルができる)
 ```
 python manage.py migrate
 ```
